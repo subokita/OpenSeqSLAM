@@ -40,13 +40,13 @@ int main(int argc, const char * argv[])
     
     OpenSeqSLAM seq_slam;
     
+    /* Preprocess the image set first */
     vector<Mat> preprocessed_spring = seq_slam.preprocess( spring );
     vector<Mat> preprocessed_winter = seq_slam.preprocess( winter );
+    
+    /* Find the matches */
     Mat matches = seq_slam.apply( preprocessed_spring, preprocessed_winter );
     
-    
-    float * index_ptr = matches.ptr<float>(0);
-    float * score_ptr = matches.ptr<float>(1);
     
     CvFont font = cvFontQt("Helvetica", 20.0, CV_RGB(255, 0, 0) );
     namedWindow("");
@@ -54,30 +54,36 @@ int main(int argc, const char * argv[])
     
     char temp[100];
     float threshold = 0.99;
+    
+    float * index_ptr = matches.ptr<float>(0);
+    float * score_ptr = matches.ptr<float>(1);
+    
     for( int x = 0; x < spring.size(); x++ ) {
         int index = static_cast<int>(index_ptr[x]);
 
+        /* Append the images together */
         Mat appended( 32, 64 * 2, CV_8UC3, Scalar(0) );
         spring[x].copyTo( Mat(appended, Rect(0, 0, 64, 32) ));
   
         if( score_ptr[x] < threshold )
             winter[index].copyTo( Mat(appended, Rect(64, 0, 64, 32) ));
         
-        resize(appended, appended, Size(), 10.0, 10.0 );
+        resize(appended, appended, Size(), 8.0, 8.0 );
         
         sprintf( temp, "Spring [%03d]", x );
         addText( appended, temp, Point( 10, 20 ), font );
         
+        /* The lower the score, the lower the differences between images */
         if( score_ptr[x] < threshold )
             sprintf( temp, "Winter [%03d]", index );
         else
             sprintf( temp, "Winter [None]" );
         
-        addText( appended, temp, Point( 650, 20 ), font );
+        addText( appended, temp, Point( 522, 20 ), font );
         
         
         imshow( "", appended );
-        waitKey();
+        waitKey(100);
     }
     
     

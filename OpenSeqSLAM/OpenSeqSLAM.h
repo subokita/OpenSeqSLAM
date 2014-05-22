@@ -1,3 +1,10 @@
+/*
+     OpenSeqSLAM
+     Copyright 2013, Niko Sünderhauf Chemnitz University of Technology niko@etit.tu-chemnitz.de
+
+     OpenSeqSLAM is an open source Matlab implementation of the original SeqSLAM algorithm published by Milford and Wyeth at ICRA12 [1]. SeqSLAM performs place recognition by matching sequences of images.
+*/
+
 //
 //  OpenSeqSLAM.h
 //  OpenSeqSLAM
@@ -5,6 +12,8 @@
 //  Created by Saburo Okita on 20/05/14.
 //  Copyright (c) 2014 Saburo Okita. All rights reserved.
 //
+
+
 
 #ifndef __OpenSeqSLAM__OpenSeqSLAM__
 #define __OpenSeqSLAM__OpenSeqSLAM__

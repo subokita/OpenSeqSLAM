@@ -125,7 +125,7 @@ Mat OpenSeqSLAM::calcDifferenceMatrix( vector<Mat>& set_1, vector<Mat>& set_2 ) 
 }
 
 /**
- * Enhance the contrast for the local region (specified within the local radius)
+ * Enhance the contrast for the local region of the difference matrix (specified within the local radius)
  * New contrast = (diff_matrix - mean) / stddev
  */
 Mat OpenSeqSLAM::enhanceLocalContrast( Mat& diff_matrix, int local_radius ) {
@@ -166,6 +166,11 @@ Mat OpenSeqSLAM::enhanceLocalContrast( Mat& diff_matrix, int local_radius ) {
     return enhanced;
 }
 
+/**
+ * Given the difference matrix, and N index, find the image that
+ * has a good match within the matching distance from image N
+ * This method returns the matching index, and its score
+ */
 pair<int, double> OpenSeqSLAM::findMatch( Mat& diff_mat, int N, int matching_dist ) {
     int move_min = static_cast<int>( minVelocity * matching_dist);
     int move_max = static_cast<int>( maxVelocity * matching_dist);
@@ -200,6 +205,7 @@ pair<int, double> OpenSeqSLAM::findMatch( Mat& diff_mat, int N, int matching_dis
     
     vector<float> score(diff_mat.rows);
     
+    /* Perform the trajectory search to collect the scores */
     for( int s = 0; s < diff_mat.rows; s++ ) {
         Mat y = increment_indices + s;
         Mat( y.size(), y.type(), Scalar(y_max) ).copyTo( y, y > y_max );
@@ -256,14 +262,19 @@ Mat OpenSeqSLAM::findMatches( Mat& diff_mat, int matching_dist ) {
         index_ptr[N] = match.first;
         score_ptr[N] = match.second;
     }
-    cout << matches.t() << endl;
-    exit(1);
     
     return matches;
 }
 
 
-
+/**
+ * Apply OpenSeqSLAM to sets of image sequences
+ *
+ * First set is the original sequence of images
+ * Second set is the image sequences that we want to match with the 1st set
+ * Returns a 2 rows matrix, where first row is the image indices, 
+ * and the second row is the score (lower is better)
+ */
 Mat OpenSeqSLAM::apply( vector<Mat>& set_1, vector<Mat>& set_2 ) {
     Mat diff_mat = calcDifferenceMatrix( set_1, set_2 );
     
