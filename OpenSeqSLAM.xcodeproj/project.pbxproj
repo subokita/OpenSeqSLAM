@@ -206,13 +206,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					/usr/local/Cellar/tbb/4.2.3/include,
 					/usr/local/Cellar/opencv/2.4.8.2/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/Cellar/opencv/2.4.8.2/lib,
 					"$(PROJECT_DIR)",
-					/usr/local/Cellar/tbb/4.2.3/lib,
 				);
 				OTHER_LDFLAGS = (
 					"-lopencv_core",
@@ -226,8 +224,6 @@
 					"-lopencv_ml",
 					"-lopencv_objdetect",
 					"-lopencv_video",
-					"-ltbb",
-					"-ltbbmalloc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -239,13 +235,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					/usr/local/Cellar/tbb/4.2.3/include,
 					/usr/local/Cellar/opencv/2.4.8.2/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/Cellar/opencv/2.4.8.2/lib,
 					"$(PROJECT_DIR)",
-					/usr/local/Cellar/tbb/4.2.3/lib,
 				);
 				OTHER_LDFLAGS = (
 					"-lopencv_core",
@@ -259,8 +253,6 @@
 					"-lopencv_ml",
 					"-lopencv_objdetect",
 					"-lopencv_video",
-					"-ltbb",
-					"-ltbbmalloc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
